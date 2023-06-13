@@ -434,7 +434,7 @@ float getHotWaterTemperature() {
     return ot.isValidResponse(response) ? ot.getFloat(response) : 0;
   }
 
-unsigned char OpenTherm::getFault(char Fault) {
+unsigned char OpenTherm::getFault() {
     return ((sendRequest(buildRequest(OpenThermRequestType::READ, OpenThermMessageID::ASFflags, 0)) >> 8) & 0xff);
 }
 unsigned char OpenTherm::getEFault() {

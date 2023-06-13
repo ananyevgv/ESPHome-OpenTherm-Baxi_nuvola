@@ -147,7 +147,7 @@ text_sensor:
     name: "Ошибка котла"
     id: error_boiler
     lambda: |-
-      uint16_t var = (id(error).state);
+      uint8_t var = (id(error).state);
       switch (var) {
         case 1: return std::string("E01 Блокировка розжига");
         case 2: return std::string("E02 Вмешательство защитного термостата");

@@ -163,23 +163,27 @@ text_sensor:
     lambda: |-
       uint8_t var = (id(error).state);
       switch (var) {
-        case 1: return std::string("E01 Блокировка розжига");
-        case 2: return std::string("E02 Вмешательство защитного термостата");
-        case 3: return std::string("E03 Вмешательство датчика тяги (пневмореле) / термостата");
-        case 5: return std::string("E05 Неисправность датчика NTC подачи отопления");
+        case 0: return std::string("Ошибок нет");
+        case 1: return std::string("E01 Отсутствие розжига");
+        case 2: return std::string("E02 Сработал защитный термостат от перегрева");
+        case 3: return std::string("E03 Сработал защитный датчик тяги");
+        case 4: return std::string("E04 Частый срыв пламени");        
+        case 5: return std::string("E05 Неисправность датчика отопления");
         case 6: return std::string("E06 Неисправность датчика контура ГВС");
-        case 10: return std::string("E10 Отсутствует разрешение от гидравлического прессостата");
+        case 10: return std::string("E10 Неисправность датчика давления воды");
         case 11: return std::string("E11 Неисправность открытия входа внешнего программируемого датчика температуры (= 04)");
         case 12: return std::string("E12 Нет разрешения от дифференциального датчика гидравлического давления (прессостата)");
         case 13: return std::string("E13 Залипание контактов дифференциального гидравлического прессостата");
         case 18: return std::string("E18 Включено заполнение системы (замечание)");
         case 19: return std::string("E19 Неисправность при заполнения системы");
-        case 25: return std::string("E25 Вмешательство защиты из-за отсутствия циркуляции воды");
+        case 25: return std::string("E25 Воздых в системе");
         case 35: return std::string("E35 Паразитное пламя (ошибка пламени)");
-        case 98: return std::string("E98 ВПроблема с контактами реле газового клапана, внутренняя ошибка");
+        case 80 ... 96: return std::string("E80-96 Ошибка сьемной панели)");
+        case 97: return std::string("E97 Неправильная частота сети электропитания)");
+        case 98: return std::string("E98 Проблема с контактами реле газового клапана, внутренняя ошибка");
         case 99: return std::string("E99 Проблема котактов реле, внутренняя ошибка");
-        default: return std::string("Ошибок нет");
-      }
+        default: return std::string("Неизвестная ошибка");
+      } 
     
 web_server:
   port: 80

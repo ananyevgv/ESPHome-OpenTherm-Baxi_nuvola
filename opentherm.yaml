@@ -62,6 +62,7 @@ sensor:
     - name: "Boiler Modulation"
       unit_of_measurement: "%"
       accuracy_decimals: 0
+      id: modulation
     - name: "Heating Target Temperature"
       unit_of_measurement: °C
       accuracy_decimals: 1
@@ -86,7 +87,20 @@ sensor:
   - platform: pid
     name: "PID Climate ERROR"
     type: ERROR    
-
+    
+  - platform: copy 
+    source_id: modulation
+    name: "${upper_devicename} power"
+    filters:
+      - lambda: return (x * 0.24);
+    unit_of_measurement: "kW"
+    device_class: "power"
+    id: boiler_power
+    
+  - platform: total_daily_energy
+    name: "${upper_devicename} Total Daily Energy"
+    power_id: boiler_power
+    
 binary_sensor:
   - platform: custom
     lambda: |-

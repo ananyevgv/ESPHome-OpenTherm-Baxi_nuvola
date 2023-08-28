@@ -184,6 +184,11 @@ text_sensor:
         case 99: return std::string("E99 Проблема котактов реле, внутренняя ошибка");
         default: return std::string("Неизвестная ошибка");
       } 
+time:
+  - platform: sntp
+    id: homeassistant_time
+    timezone:  Europe/Moscow #"MSK-2MSD,M3.5.0/2,M10.5.0/3"
+    servers: !secret sntp
     
 web_server:
   port: 80

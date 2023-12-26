@@ -43,7 +43,26 @@ public:
     // This will be called once to set up the component
     // think of it as the setup() call in Arduino
       ESP_LOGD("opentherm_component", "Setup");
+	  
+      unsigned long request3 = ot.buildRequest(OpenThermRequestType::READ, OpenThermMessageID::SConfigSMemberIDcode, 0xFFFF);
+      unsigned long respons3 = ot.sendRequest(request3);
+      uint8_t SlaveMemberIDcode = respons3 >> 0 & 0xFF;
+      uint8_t flags = (respons3 & 0xFFFF) >> 8 & 0xFF;
 
+      ESP_LOGD ("opentherm_component", "SConfigSMemberIDcode %X", request3 );
+
+      unsigned long request2 = ot.buildRequest(OpenThermRequestType::WRITE, OpenThermMessageID::MConfigMMemberIDcode, SlaveMemberIDcode);
+      unsigned long respons2 = ot.sendRequest(request2);
+      ESP_LOGD ("opentherm_component", "MConfigMMemberIDcode %X",  request2 ); 
+
+      unsigned long request127 = ot.buildRequest(OpenThermRequestType::READ, OpenThermMessageID::SlaveVersion, 0);
+      ESP_LOGD ("opentherm_component", "SlaveVersion %X",  request127 ); 
+
+      unsigned long request126 = ot.buildRequest(OpenThermRequestType::WRITE, OpenThermMessageID::MasterVersion, 0x013F);
+      unsigned long respons126 = ot.sendRequest(request126);
+      ESP_LOGD ("opentherm_component", "MasterVersion %X",  request126 ); 
+
+	  
       ot.begin(handleInterrupt);
 
       thermostatSwitch->add_on_state_callback([=](bool state) -> void {
